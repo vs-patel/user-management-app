@@ -2,7 +2,7 @@ import { Entity, ObjectIdColumn, Column, CreateDateColumn, UpdateDateColumn } fr
 import { ObjectId } from 'mongodb';
 
 @Entity()
-export class User {
+export class Users {
     @ObjectIdColumn()
     _id: ObjectId | undefined
 
