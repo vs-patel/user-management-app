@@ -1,10 +1,10 @@
-import { AppDataSource } from "../../db/data-source";
-import { UserRequestDTO } from "../request/UserRequestDTO";
-import { UserResponseDTO } from "../response/UserResponseDTO";
-import { UserRepository } from "../repositories/UserRepository";
+import { dataSource } from '../../db/data-source';
+import { UserRequestDTO } from '../request/UserRequestDTO';
+import { UserResponseDTO } from '../response/UserResponseDTO';
+import { UserRepository } from '../repositories/UserRepository';
 
 export class UserService {
-    private userRepository = new UserRepository(AppDataSource);
+    private userRepository = new UserRepository(dataSource);
 
     public async createUser(body: UserRequestDTO): Promise<UserResponseDTO> {
         const createdResp = await this.userRepository.createNewUser(body);

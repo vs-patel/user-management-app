@@ -1,14 +1,12 @@
-import "reflect-metadata";
-import { DataSource } from "typeorm";
+import 'reflect-metadata';
+import { DataSource } from 'typeorm';
 
-import { User } from "../api/models/User";
+import { User } from '../api/models/User';
 
-export const AppDataSource = new DataSource({
-    type: "mongodb",
-    url: "mongodb://localhost:27017/user-management-db",
+export const dataSource = new DataSource({
+    type: 'mongodb',
+    url: `${process.env.DB_HOST}${process.env.DB_NAME}`,
     synchronize: true,
     logging: true,
     entities: [User],
-    migrations: [],
-    subscribers: [],
 });

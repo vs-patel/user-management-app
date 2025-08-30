@@ -24,21 +24,20 @@ export class UserController {
   }
 
   @Get('/:id')
-  public async getUserById(@Param("id") userId: string, @Res() resp: any): Promise<UserResponseDTO | null> {
+  public async getUserById(@Param('id') userId: string, @Res() resp: any): Promise<UserResponseDTO | null> {
     const result: UserResponseDTO | null = await this.userService.getUserById(userId);
     return resp.status(200).json({ message: 'User Details', data: result });
   }
 
   @Put('/:id')
-  public async updateUser(@Param("id") userId: string, @Req() req: any, @Res() resp: any, @Body() user: UserRequestDTO): Promise<UserResponseDTO> {
+  public async updateUser(@Param('id') userId: string, @Req() req: any, @Res() resp: any, @Body() user: UserRequestDTO): Promise<UserResponseDTO> {
     const result: UserResponseDTO = await this.userService.updateUser(userId, user);
     return resp.status(200).json({ message: 'User updated successfully', data: result });
   }
 
   @Delete('/:id')
-  public async deleteUserById(@Param("id") userId: string, @Res() resp: any): Promise<UserResponseDTO | null> {
+  public async deleteUserById(@Param('id') userId: string, @Res() resp: any): Promise<UserResponseDTO | null> {
     const result: UserResponseDTO | null = await this.userService.deleteUserById(userId);
     return resp.status(200).json({ message: 'User Deleted successfully', data: result });
   }
-
 }
