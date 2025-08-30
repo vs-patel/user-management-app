@@ -1,4 +1,5 @@
-import { Entity, ObjectIdColumn, Column, CreateDateColumn, UpdateDateColumn, ObjectId } from 'typeorm'
+import { Entity, ObjectIdColumn, Column, CreateDateColumn, UpdateDateColumn } from 'typeorm'
+import { ObjectId } from 'mongodb';
 
 @Entity()
 export class User {

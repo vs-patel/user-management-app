@@ -3,31 +3,53 @@ import { UserRequestDTO } from '../request/UserRequestDTO';
 import { UserResponseDTO } from '../response/UserResponseDTO';
 import { UserRepository } from '../repositories/UserRepository';
 
-export class UserService {
+class UserService {
     private userRepository = new UserRepository(dataSource);
 
     public async createUser(body: UserRequestDTO): Promise<UserResponseDTO> {
-        const createdResp = await this.userRepository.createNewUser(body);
-        return createdResp;
+        try {
+            const createdResp = await this.userRepository.createNewUser(body);
+            return createdResp;
+        } catch (error: any) {
+            throw new Error(error);
+        }
     }
 
     public async getAllUsers(): Promise<UserResponseDTO[]> {
-        const fetchUsersResp = await this.userRepository.fetchAllUsers();
-        return fetchUsersResp;
+        try {
+            const fetchUsersResp = await this.userRepository.fetchAllUsers();
+            return fetchUsersResp;
+        } catch (error: any) {
+            throw new Error(error);
+        }
     }
 
     public async getUserById(userId: string): Promise<UserResponseDTO | null> {
-        const fetchUserDetailsResp = await this.userRepository.fetchUserById(userId);
-        return fetchUserDetailsResp;
+        try {
+            const fetchUserDetailsResp = await this.userRepository.fetchUserById(userId);
+            return fetchUserDetailsResp;
+        } catch (error: any) {
+            throw new Error(error);
+        }
     }
 
     public async updateUser(userId: string, body: UserRequestDTO): Promise<UserResponseDTO> {
-        const updatedResp = await this.userRepository.updateUser(userId, body);
-        return updatedResp;
+        try {
+            const updatedResp = await this.userRepository.updateUser(userId, body);
+            return updatedResp;
+        } catch (error: any) {
+            throw new Error(error);
+        }
     }
 
-    public async deleteUserById(userId: string): Promise<UserResponseDTO | null> {
-        const deletedUserResp = await this.userRepository.deleteUserById(userId);
-        return deletedUserResp;
+    public async deleteUserById(userId: string): Promise<any> {
+        try {
+            const deletedUserResp = await this.userRepository.deleteUserById(userId);
+            return deletedUserResp;
+        } catch (error: any) {
+            throw new Error(error);
+        }
     }
 }
+
+export default new UserService();

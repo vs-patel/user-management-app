@@ -26,7 +26,7 @@ export class UserRepository extends Repository<User> {
         return await this.update({ _id: new ObjectId(userId) }, data);
     }
 
-    public async deleteUserById(userId: string): Promise<any | null> {
+    public async deleteUserById(userId: string): Promise<any> {
         return await this.delete({ _id: new ObjectId(userId) });
     }
 }
