@@ -5,7 +5,7 @@ import { User } from "../api/models/User";
 
 export const AppDataSource = new DataSource({
     type: "mongodb",
-    url: "mongodb://localhost:27017/your_database_name",
+    url: "mongodb://localhost:27017/user-management-db",
     synchronize: true,
     logging: true,
     entities: [User],

@@ -1,7 +1,7 @@
-import { UserService } from '../services/UserService';
-
 import 'reflect-metadata';
-import { Param, Body, Get, Post, Put, Delete, JsonController, Req, Res } from 'routing-controllers';
+import { Body, Get, Post, JsonController, Req, Res, Delete, Put, Param } from 'routing-controllers';
+
+import { UserService } from '../services/UserService';
 import { UserRequestDTO } from '../request/UserRequestDTO';
 import { UserResponseDTO } from '../response/UserResponseDTO';
 
@@ -11,29 +11,34 @@ export class UserController {
     this.userService = new UserService();
   }
 
+  @Post('/')
+  public async createUser(@Req() req: any, @Res() resp: any, @Body() user: UserRequestDTO): Promise<UserResponseDTO> {
+    const result: UserResponseDTO = await this.userService.createUser(user);
+    return resp.status(201).json({ message: 'User created successfully', data: result });
+  }
+
   @Get('/')
-  getAll() {
-    return 'This action returns all users';
+  public async getAllUsers(@Req() req: any, @Res() resp: any): Promise<UserResponseDTO[]> {
+    const result: UserResponseDTO[] = await this.userService.getAllUsers();
+    return resp.status(200).json({ message: 'Users List', data: result });
   }
 
   @Get('/:id')
-  getOne(@Param('id') id: number) {
-    return 'This action returns user #' + id;
+  public async getUserById(@Param("id") userId: string, @Res() resp: any): Promise<UserResponseDTO | null> {
+    const result: UserResponseDTO | null = await this.userService.getUserById(userId);
+    return resp.status(200).json({ message: 'User Details', data: result });
   }
 
-  @Post('/')
-  async createUser(@Req() req: any, @Res() resp: any, @Body() user: UserRequestDTO): Promise<UserResponseDTO> {
-    const result: UserResponseDTO = await this.userService.createUser(user);
-    return resp.status(201).json({ message: 'User created', data: result });
+  @Put('/:id')
+  public async updateUser(@Param("id") userId: string, @Req() req: any, @Res() resp: any, @Body() user: UserRequestDTO): Promise<UserResponseDTO> {
+    const result: UserResponseDTO = await this.userService.updateUser(userId, user);
+    return resp.status(200).json({ message: 'User updated successfully', data: result });
   }
 
-  @Put('/users/:id')
-  put(@Param('id') id: number, @Body() user: any) {
-    return 'Updating a user...';
+  @Delete('/:id')
+  public async deleteUserById(@Param("id") userId: string, @Res() resp: any): Promise<UserResponseDTO | null> {
+    const result: UserResponseDTO | null = await this.userService.deleteUserById(userId);
+    return resp.status(200).json({ message: 'User Deleted successfully', data: result });
   }
 
-  @Delete('/users/:id')
-  remove(@Param('id') id: number) {
-    return 'Removing user...';
-  }
 }

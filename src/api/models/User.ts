@@ -1,9 +1,9 @@
-import { Entity, ObjectIdColumn, Column } from "typeorm"
+import { Entity, ObjectIdColumn, Column, CreateDateColumn, UpdateDateColumn, ObjectId } from "typeorm"
 
 @Entity()
 export class User {
     @ObjectIdColumn()
-    public id: number | undefined
+    _id: ObjectId | undefined
 
     @Column()
     firstName: string | undefined
@@ -13,4 +13,10 @@ export class User {
 
     @Column()
     age: number | undefined
+
+    @CreateDateColumn()
+    createdAt: Date | undefined
+
+    @UpdateDateColumn()
+    updatedAt: Date | undefined
 }

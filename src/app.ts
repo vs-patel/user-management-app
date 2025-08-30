@@ -11,12 +11,12 @@ const app = createExpressServer({
 });
 
 app.use(express.json());
-AppDataSource.initialize().then(() => {
-    app.use(bodyParser.json());
+app.use(bodyParser.json());
+
+AppDataSource.initialize().then(async () => {
     console.log("Data Source has been initialized!");
-    app.listen(port, () => {
-        console.log(`Server running at http://localhost:${port}`);
-    });
+    await app.listen(port);
+    console.log(`API Info: http://localhost:${port}`);
 }).catch((error) => {
     console.error("Error during Data Source initialization:", error);
 });
