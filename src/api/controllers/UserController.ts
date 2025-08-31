@@ -1,5 +1,6 @@
 import 'reflect-metadata';
 import { Body, Get, Post, JsonController, Req, Res, Delete, Put, Param } from 'routing-controllers';
+import { plainToInstance } from 'class-transformer';
 
 import userService from '../services/UserService';
 import { UserRequestDTO } from '../request/UserRequestDTO';
@@ -11,7 +12,7 @@ export class UserController {
   @Post('/')
   public async createUser(@Req() req: any, @Res() resp: any, @Body() user: UserRequestDTO): Promise<UserResponseDTO> {
     const result: UserResponseDTO = await userService.createUser(user);
-    return resp.status(201).json({ message: 'User created successfully', data: result });
+    return resp.status(201).json({ message: 'User created successfully', data: plainToInstance(UserResponseDTO, result) });
   }
 
   @Get('/')
