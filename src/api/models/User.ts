@@ -1,8 +1,9 @@
-import { Entity, ObjectIdColumn, Column, CreateDateColumn, UpdateDateColumn } from 'typeorm'
+import { Entity, ObjectIdColumn, Column, CreateDateColumn, UpdateDateColumn, BeforeInsert, BeforeUpdate } from 'typeorm'
 import { ObjectId } from 'mongodb';
+import * as bcrypt from 'bcrypt';
 
 @Entity()
-export class Users {
+export class User {
     @ObjectIdColumn()
     _id: ObjectId | undefined
 
@@ -13,6 +14,12 @@ export class Users {
     lastName: string | undefined
 
     @Column()
+    email: string | undefined
+
+    @Column()
+    password: string | undefined
+
+    @Column()
     age: number | undefined
 
     @CreateDateColumn()
@@ -20,4 +27,13 @@ export class Users {
 
     @UpdateDateColumn()
     updatedAt: Date | undefined
+
+    @BeforeInsert()
+    @BeforeUpdate()
+    async hashPassword() {
+        if (this.password) {
+            const saltRounds = 10;
+            this.password = await bcrypt.hash(this.password, saltRounds);
+        }
+    }
 }

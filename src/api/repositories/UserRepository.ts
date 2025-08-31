@@ -1,17 +1,18 @@
 import { Repository, DataSource } from 'typeorm';
 import { ObjectId } from 'mongodb';
 
-import { Users } from '../models/User';
+import { User } from '../models/User';
 import { UserRequestDTO } from '../request/UserRequestDTO';
 import { UserResponseDTO } from '../response/UserResponseDTO';
 
-export class UserRepository extends Repository<Users> {
+export class UserRepository extends Repository<User> {
     constructor(dataSource: DataSource) {
-        super(Users, dataSource.createEntityManager());
+        super(User, dataSource.manager);
     }
 
     public async createNewUser(data: UserRequestDTO): Promise<UserResponseDTO> {
-        return await this.save(data);
+        const newUser = this.create(data);
+        return await this.save(newUser);
     }
 
     public async fetchAllUsers(): Promise<UserResponseDTO[]> {

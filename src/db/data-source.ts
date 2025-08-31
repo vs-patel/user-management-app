@@ -1,7 +1,7 @@
 import 'reflect-metadata';
 import { DataSource } from 'typeorm';
 
-import { Users } from '../api/models/User';
+import { User } from '../api/models/User';
 
 export const dataSource = new DataSource({
     type: 'mongodb',
@@ -10,5 +10,5 @@ export const dataSource = new DataSource({
     database: `${process.env.DB_NAME}`,
     synchronize: true,
     logging: false,
-    entities: [Users],
+    entities: [User],
 });
