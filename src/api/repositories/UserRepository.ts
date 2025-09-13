@@ -1,14 +1,12 @@
-import { Repository, DataSource } from 'typeorm';
+import { Repository } from 'typeorm';
 import { ObjectId } from 'mongodb';
 
 import { User } from '../models/User';
 import { UserRequestDTO } from '../request/UserRequestDTO';
 import { UserResponseDTO } from '../response/UserResponseDTO';
+import { dataSource } from '../../db/data-source';
 
-export class UserRepository extends Repository<User> {
-    constructor(dataSource: DataSource) {
-        super(User, dataSource.manager);
-    }
+class UserRepository extends Repository<User> {
 
     public async createNewUser(data: UserRequestDTO): Promise<UserResponseDTO> {
         const newUser = this.create(data);
@@ -16,11 +14,14 @@ export class UserRepository extends Repository<User> {
     }
 
     public async fetchAllUsers(): Promise<UserResponseDTO[]> {
-        return await this.find();
+        return await this.find({ select: ['firstName', 'lastName', 'email', 'age', 'createdAt', 'updatedAt'] });
     }
 
     public async fetchUserById(userId: string): Promise<any | null> {
-        return await this.findOneBy({ _id: new ObjectId(userId) });
+        return await this.findOne({
+            select: ['firstName', 'lastName', 'email', 'age', 'createdAt', 'updatedAt'],
+            where: { _id: new ObjectId(userId) }
+        });
     }
 
     public async updateUser(userId: string, data: UserRequestDTO): Promise<any> {
@@ -31,3 +32,5 @@ export class UserRepository extends Repository<User> {
         return await this.delete({ _id: new ObjectId(userId) });
     }
 }
+
+export default new UserRepository(User, dataSource.manager);
