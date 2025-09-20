@@ -8,6 +8,7 @@ import { dataSource } from './db/data-source';
 
 const port = process.env.SERVER_PORT;
 const app = createExpressServer({
+    defaultErrorHandler: false,
     controllers: [UserController],
 });
 

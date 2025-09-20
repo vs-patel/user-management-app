@@ -5,10 +5,15 @@ import userRepository from '../repositories/UserRepository';
 class UserService {
     public async createUser(body: UserRequestDTO): Promise<UserResponseDTO> {
         try {
+            throw new Error();
             const createdResp = await userRepository.createNewUser(body);
             return createdResp;
         } catch (error: any) {
-            throw new Error(error);
+            throw ({
+                httpCode: 500,
+                message: 'Internal server error',
+                description: 'Something went wrong'
+            })
         }
     }
 
